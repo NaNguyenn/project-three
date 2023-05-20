@@ -13,3 +13,7 @@ Project uses [React Native](https://reactnative.dev/docs/getting-started) and
 [Android Studio](https://developer.android.com/studio#downloads) for android development.
 
 [Expo Go](https://expo.dev/client) for testing.
+
+[NativeWind](https://www.nativewind.dev/quick-starts/expo) for styling.
+
+[React Navigation](https://reactnavigation.org/docs/getting-started/) for navigating.
