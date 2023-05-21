@@ -2,26 +2,32 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import HorizontalButton from '../components/HorizontalButton'
+import Footer from '../components/Footer'
 
 const HomeScreen = () => {
 
     const navigation = useNavigation()
 
-    // Hide the default header 
     useLayoutEffect(() => {
         navigation.setOptions({
+            // Hide the default header
             headerShown: false,
         })
     }, [])
 
     return (
-        <View className="bg-neutral flex-1 flex-col gap-y-6 p-6 justify-center">
-            <View>
-                <HorizontalButton color="bg-primary" content="Từ vựng" />
+        <View className="flex-col h-full">
+            {/* Main section */}
+            <View className="bg-neutral flex-1 flex-col gap-y-6 p-6 justify-center">
+                <View>
+                    <HorizontalButton color="bg-primary" content="Từ vựng" />
+                </View>
+                <View>
+                    <HorizontalButton color="bg-secondary" content="Ngữ pháp" />
+                </View>
             </View>
-            <View>
-                <HorizontalButton color="bg-secondary" content="Ngữ pháp" />
-            </View>
+            {/* Footer */}
+            <Footer />
         </View>
     )
 }
