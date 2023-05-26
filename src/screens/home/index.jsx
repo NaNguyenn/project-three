@@ -1,8 +1,8 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import HorizontalButton from '../components/HorizontalButton'
-import Footer from '../components/Footer'
+import HorizontalButton from '../../components/HorizontalButton'
+import Footer from '../../components/Footer'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const HomeScreen = () => {
@@ -12,7 +12,7 @@ const HomeScreen = () => {
     useLayoutEffect(() => {
         navigation.setOptions({
             // Hide the default header
-            headerShown: false,
+            // headerShown: false,
         })
     }, [])
 
