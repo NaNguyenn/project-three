@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "306241532731",
+    "project_id": "majestic-camp-388006",
+    "storage_bucket": "majestic-camp-388006.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306241532731:android:9183a97f3e496d9bca7d1e",
+        "android_client_info": {
+          "package_name": "host.exp.exponent"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzey-ZODw_TI03z0O9oC5GTviJ7wdwgks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

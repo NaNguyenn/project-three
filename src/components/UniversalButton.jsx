@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-const HorizontalButton = ({ color, content }) => {
+const UniversalButton = ({ color, content }) => {
     return (
         <TouchableOpacity className={`${color} py-6 rounded-lg shadow`}>
             <Text className="text-neutral text-center font-bold text-2xl">
@@ -11,4 +11,4 @@ const HorizontalButton = ({ color, content }) => {
     )
 }
 
-export default HorizontalButton
+export default UniversalButton

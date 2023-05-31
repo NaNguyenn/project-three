@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "englishLearningApp",
+    "scheme": "yourscheme",
     "slug": "englishLearningApp",
     "version": "1.0.0",
     "orientation": "portrait",

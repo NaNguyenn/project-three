@@ -1,9 +1,9 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import HorizontalButton from '../../components/HorizontalButton'
-import Footer from '../../components/Footer'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import UniversalButton from '../../components/UniversalButton'
+import TabNavigator from '../../navigators/TabNavigator'
 
 const HomeScreen = () => {
 
@@ -21,14 +21,12 @@ const HomeScreen = () => {
             {/* Main section */}
             <View className="bg-neutral flex-1 flex-col gap-y-6 p-6 justify-center">
                 <View>
-                    <HorizontalButton color="bg-primary" content="Từ vựng" />
+                    <UniversalButton color="bg-primary" content="Từ vựng" />
                 </View>
                 <View>
-                    <HorizontalButton color="bg-secondary" content="Ngữ pháp" />
+                    <UniversalButton color="bg-secondary" content="Ngữ pháp" />
                 </View>
             </View>
-            {/* Footer */}
-            <Footer />
         </SafeAreaView>
     )
 }
