@@ -3,19 +3,25 @@ import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import useAuth from '../../hooks/useAuth'
-import UniversalButton from '../../components/UniversalButton'
+import { signOut } from 'firebase/auth'
+import { auth } from '../../config/firebaseConfig'
 
 const ProfileScreen = ({ navigation }) => {
     const { user } = useAuth()
-
-    console.log(user)
 
     return (
         <SafeAreaView className="flex h-full">
             {user ? (
                 // Screen when user logged in 
-                <View className="bg-neutral flex-1">
-                    <Text>{user}</Text>
+                <View className="bg-neutral flex-1 gap-y-6">
+                    <Text>{user?.email}</Text>
+                    <TouchableOpacity
+                        onPress={() => signOut(auth)}
+                        className='bg-primary py-6 rounded-lg shadow w-1/2 m-auto'>
+                        <Text className="text-neutral text-center font-bold text-2xl">
+                            Đăng xuất
+                        </Text>
+                    </TouchableOpacity>
                 </View>
             ) : (
                 // Screen when no user 

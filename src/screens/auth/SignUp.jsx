@@ -2,7 +2,7 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
-import app from '../../config/firebaseConfig'
+import { auth } from '../../config/firebaseConfig'
 
 const SignUpScreen = ({ navigation }) => {
 
@@ -58,12 +58,11 @@ const SignUpScreen = ({ navigation }) => {
         }
 
         // Firebase logic 
-        const auth = getAuth(app)
         createUserWithEmailAndPassword(auth, signUpForm.email, signUpForm.password)
             .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user
-                navigation.navigate('Home')
+                navigation.navigate('Profile')
             })
             .catch((error) => {
                 // Handle firebase sign up error

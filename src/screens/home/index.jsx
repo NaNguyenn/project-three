@@ -3,7 +3,6 @@ import React, { useLayoutEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import UniversalButton from '../../components/UniversalButton'
-import TabNavigator from '../../navigators/TabNavigator'
 
 const HomeScreen = () => {
 
