@@ -62,6 +62,7 @@ const SignUpScreen = ({ navigation }) => {
             .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user
+                // Add user to firestore
                 navigation.navigate('Profile')
             })
             .catch((error) => {

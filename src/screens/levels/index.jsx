@@ -1,9 +1,8 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const LevelScreen = ({ navigation }) => {
-
     return (
         <SafeAreaView className="flex-col h-full">
             {/* Main section */}
