@@ -1,7 +1,9 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Pressable } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import useVocabulary from '../../hooks/useVocabulary';
+import { Audio } from 'expo-av';
+import { Ionicons } from '@expo/vector-icons';
 
 const LessonScreen = ({ navigation }) => {
     const vocabulary = useVocabulary()
@@ -10,6 +12,7 @@ const LessonScreen = ({ navigation }) => {
     const [options, setOptions] = useState([])
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(null)
     const [isAnswerChecked, setIsAnswerChecked] = useState(false)
+    const [sound, setSound] = React.useState()
 
     const generateRandomOptions = () => {
         const correctIndex = Math.floor(Math.random() * 4)
@@ -35,6 +38,20 @@ const LessonScreen = ({ navigation }) => {
     useEffect(() => {
         setOptions(generateRandomOptions())
     }, [currentWordIndex, isQuizMode])
+
+    const handlePlayAudio = async () => {
+        const { sound } = await Audio.Sound.createAsync({ uri: currentWord.audio });
+        setSound(sound);
+        await sound.playAsync();
+    }
+
+    useEffect(() => {
+        return sound
+            ? () => {
+                sound.unloadAsync();
+            }
+            : undefined;
+    }, [sound]);
 
     const handleOptionPress = (index) => {
         if (!isAnswerChecked) {
@@ -65,21 +82,27 @@ const LessonScreen = ({ navigation }) => {
         }
     };
 
-    const currentWord = vocabulary[currentWordIndex];
+    const currentWord = vocabulary[currentWordIndex]
 
     return (
         <SafeAreaView className="h-full flex">
             {/* Question */}
-            <Text className='text-3xl my-4'>{isQuizMode ? currentWord.quiz : currentWord.eng}</Text>
+            <Pressable className='flex-row items-center gap-x-2' onPress={handlePlayAudio}>
+                <Ionicons name="md-volume-medium" size={30} color="black" />
+                <Text className='text-3xl my-4'>
+                    {isQuizMode ? currentWord.quiz : currentWord.eng}
+                </Text>
+            </Pressable>
 
-            {/* Options */}
+            {/* Options container */}
             <View className='gap-y-4 flex-1'>
+                {/* Map 4 options  */}
                 {options.map((option, index) => (
                     <TouchableOpacity
                         key={index}
                         onPress={() => handleOptionPress(index)}
                         className={`p-6 rounded-lg shadow ${isAnswerChecked
-                            ? ((option === vocabulary[currentWordIndex].vie || option === vocabulary[currentWordIndex].eng)
+                            ? ((option === currentWord.vie || option === currentWord.eng)
                                 ? 'bg-green-500'
                                 : selectedOptionIndex === index
                                     ? 'bg-red-500'
