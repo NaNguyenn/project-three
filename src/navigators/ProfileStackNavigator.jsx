@@ -1,10 +1,10 @@
 import React from 'react'
-import ProfileScreen from '../screens/profile';
-import SignInScreen from '../screens/auth/SignIn';
-import SignUpScreen from '../screens/auth/SignUp';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ProfileScreen from '../screens/profile'
+import SignInScreen from '../screens/auth/SignIn'
+import SignUpScreen from '../screens/auth/SignUp'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-const ProfileStack = createNativeStackNavigator();
+const ProfileStack = createNativeStackNavigator()
 
 const ProfileStackNavigator = () => {
     return (

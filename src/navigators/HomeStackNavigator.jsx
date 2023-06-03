@@ -1,11 +1,11 @@
 import React from 'react'
-import HomeScreen from '../screens/home';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import LevelScreen from '../screens/levels';
-import CategoriesScreen from '../screens/categories';
-import LessonScreen from '../screens/lesson';
+import HomeScreen from '../screens/home'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import LevelScreen from '../screens/levels'
+import CategoriesScreen from '../screens/categories'
+import LessonScreen from '../screens/lesson'
 
-const HomeStack = createNativeStackNavigator();
+const HomeStack = createNativeStackNavigator()
 
 const HomeStackNavigator = () => {
     return (

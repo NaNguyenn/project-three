@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { collection, getDocs } from "firebase/firestore"
-import { db } from '../config/firebaseConfig';
+import { db } from '../config/firebaseConfig'
 
 // Initialize an empty context object
 const VocabularyContext = createContext({})

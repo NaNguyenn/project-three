@@ -1,10 +1,10 @@
 import React from 'react'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Ionicons from '@expo/vector-icons/Ionicons'
-import HomeStackNavigator from './HomeStackNavigator';
-import ProfileStackNavigator from './ProfileStackNavigator';
+import HomeStackNavigator from './HomeStackNavigator'
+import ProfileStackNavigator from './ProfileStackNavigator'
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator()
 
 const TabNavigator = () => {
     return (
@@ -12,18 +12,18 @@ const TabNavigator = () => {
             screenOptions={({ route }) => ({
                 headerShown: false,
                 tabBarIcon: ({ focused, color, size }) => {
-                    let iconName;
+                    let iconName
 
                     if (route.name === 'Trang Chủ') {
                         iconName = focused
                             ? 'md-home'
-                            : 'md-home-outline';
+                            : 'md-home-outline'
                     } else if (route.name === 'Hồ Sơ') {
-                        iconName = focused ? 'md-person' : 'md-person-outline';
+                        iconName = focused ? 'md-person' : 'md-person-outline'
                     }
 
                     // You can return any component that you like here!
-                    return <Ionicons name={iconName} size={size} color={color} />;
+                    return <Ionicons name={iconName} size={size} color={color} />
                 },
                 tabBarActiveTintColor: 'tomato',
                 tabBarInactiveTintColor: 'gray',

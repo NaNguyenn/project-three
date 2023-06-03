@@ -1,8 +1,8 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-// import {...} from "firebase/functions";
-// import {...} from "firebase/storage";
+import { initializeApp } from 'firebase/app'
+import { getAuth } from "firebase/auth"
+import { getFirestore } from "firebase/firestore"
+// import {...} from "firebase/functions"
+// import {...} from "firebase/storage"
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -13,7 +13,7 @@ const firebaseConfig = {
   messagingSenderId: "306241532731",
   appId: "1:306241532731:web:59d06de59b3f3727ca7d1e",
   measurementId: "G-R6SL6RR0QY"
-};
+}
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
