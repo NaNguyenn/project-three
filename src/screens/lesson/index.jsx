@@ -93,6 +93,7 @@ const LessonScreen = ({ route, navigation }) => {
             }
         }
     };
+    const currentWord = vocabulary[currentWordIndex]
 
     const handleFinishPress = async () => {
         if (user) {
@@ -112,10 +113,8 @@ const LessonScreen = ({ route, navigation }) => {
             }
         }
 
-        navigation.navigate('Home')
+        navigation.navigate('Categories', { level: currentWord.level })
     }
-
-    const currentWord = vocabulary[currentWordIndex]
 
     return (
         <SafeAreaView className="h-full flex">
