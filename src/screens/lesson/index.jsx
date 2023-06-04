@@ -4,15 +4,21 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import useVocabulary from '../../hooks/useVocabulary';
 import { Audio } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
+import useAuth from '../../hooks/useAuth';
+import { db } from '../../config/firebaseConfig';
+import { collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 
-const LessonScreen = ({ navigation }) => {
-    const vocabulary = useVocabulary()
+const LessonScreen = ({ route, navigation }) => {
+    const { user } = useAuth()
+    const category = route.params.category
+    const vocabulary = useVocabulary(category)
     const [currentWordIndex, setCurrentWordIndex] = useState(0)
     const [isQuizMode, setIsQuizMode] = useState(false)
     const [options, setOptions] = useState([])
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(null)
     const [isAnswerChecked, setIsAnswerChecked] = useState(false)
     const [sound, setSound] = React.useState()
+    const [score, setScore] = useState(0)
 
     const generateRandomOptions = () => {
         const correctIndex = Math.floor(Math.random() * 4)
@@ -39,8 +45,8 @@ const LessonScreen = ({ navigation }) => {
         setOptions(generateRandomOptions())
     }, [currentWordIndex, isQuizMode])
 
-    const handlePlayAudio = async () => {
-        const { sound } = await Audio.Sound.createAsync({ uri: currentWord.audio });
+    const handlePlayAudio = async (audioSrc) => {
+        const { sound } = await Audio.Sound.createAsync({ uri: audioSrc });
         setSound(sound);
         await sound.playAsync();
     }
@@ -65,6 +71,12 @@ const LessonScreen = ({ navigation }) => {
 
     const handleCheckAnswer = () => {
         setIsAnswerChecked(true);
+        if (
+            (isQuizMode && options[selectedOptionIndex] === vocabulary[currentWordIndex].eng) ||
+            (!isQuizMode && options[selectedOptionIndex] === vocabulary[currentWordIndex].vie)
+        ) {
+            setScore(score + 1);
+        }
     };
 
     const handleNextQuestion = () => {
@@ -82,17 +94,45 @@ const LessonScreen = ({ navigation }) => {
         }
     };
 
+    const handleFinishPress = async () => {
+        if (user) {
+            try {
+                const userScoresRef = collection(db, 'userScores')
+                const querySnapshot = await getDocs(
+                    query(userScoresRef, where('userEmail', '==', user.email))
+                )
+                const docRef = querySnapshot.docs[0].ref;
+                const docData = querySnapshot.docs[0].data();
+                console.log(docData)
+                const scores = docData.scores;
+                scores[category] = score
+                await updateDoc(docRef, { scores })
+            } catch (error) {
+                console.log('Error updating score:', error);
+            }
+        }
+
+        navigation.navigate('Home')
+    }
+
     const currentWord = vocabulary[currentWordIndex]
 
     return (
         <SafeAreaView className="h-full flex">
-            {/* Question */}
-            <Pressable className='flex-row items-center gap-x-2' onPress={handlePlayAudio}>
-                <Ionicons name="md-volume-medium" size={30} color="black" />
-                <Text className='text-3xl my-4'>
-                    {isQuizMode ? currentWord.quiz : currentWord.eng}
+            {/* Question & score container*/}
+            <View className='flex-row items-center mb-4'>
+                {/* Question */}
+                <Pressable className='flex-row flex-1 items-center gap-x-2' onPress={() => handlePlayAudio(currentWord.audio)}>
+                    <Ionicons name="md-volume-medium" size={30} color="black" />
+                    <Text className='text-xl'>
+                        {isQuizMode ? currentWord.quiz : currentWord.eng}
+                    </Text>
+                </Pressable>
+                {/* Score */}
+                <Text className='mx-6 text-xl'>
+                    {score}/{vocabulary.length * 2}
                 </Text>
-            </Pressable>
+            </View>
 
             {/* Options container */}
             <View className='gap-y-4 flex-1'>
@@ -119,7 +159,7 @@ const LessonScreen = ({ navigation }) => {
                 ))}
             </View>
 
-            {/* Buttons tray */}
+            {/* Buttons container */}
             <View className='flex-row'>
                 <TouchableOpacity
                     onPress={handleCheckAnswer}
@@ -131,7 +171,7 @@ const LessonScreen = ({ navigation }) => {
                 </TouchableOpacity>
                 {(isQuizMode && currentWordIndex === vocabulary.length - 1) ?
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Categories')}
+                        onPress={() => handleFinishPress()}
                         className={`flex-1 py-6 shadow ${isAnswerChecked ? 'bg-primary' : 'bg-primaryLight'}`}
                     >
                         <Text className="text-neutral text-center font-bold text-2xl">

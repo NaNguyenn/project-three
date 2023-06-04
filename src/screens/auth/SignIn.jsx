@@ -72,7 +72,7 @@ const SignInScreen = ({ navigation }) => {
         <View>
           <Text>Email</Text>
           <TextInput
-            className='bg-neutral p-1 rounded-sm'
+            className='bg-neutral p-3 rounded-sm'
             placeholder='Nhập email hợp lệ'
             value={signInForm.email}
             onChangeText={(text) => onChange('email', text)}
@@ -81,7 +81,7 @@ const SignInScreen = ({ navigation }) => {
         <View>
           <Text>Mật khẩu</Text>
           <TextInput
-            className='bg-neutral p-1 rounded-sm'
+            className='bg-neutral p-3 rounded-sm'
             placeholder='Nhập mật khẩu (ít nhất 8 ký tự)'
             secureTextEntry={true}
             value={signInForm.password}

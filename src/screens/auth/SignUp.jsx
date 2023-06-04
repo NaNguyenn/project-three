@@ -1,10 +1,16 @@
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
-import { auth } from '../../config/firebaseConfig'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth, db } from '../../config/firebaseConfig'
+import useVocabulary from '../../hooks/useVocabulary'
+import { addDoc, collection } from 'firebase/firestore'
 
 const SignUpScreen = ({ navigation }) => {
+
+    // Get all unique categories 
+    const vocabulary = useVocabulary()
+    const uniqueCategories = [...new Set(vocabulary.map((word) => word.category))]
 
     // Form State 
     const [signUpForm, setSignUpForm] = useState({
@@ -59,10 +65,28 @@ const SignUpScreen = ({ navigation }) => {
 
         // Firebase logic 
         createUserWithEmailAndPassword(auth, signUpForm.email, signUpForm.password)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
                 // Signed in
                 const user = userCredential.user
+
                 // Add user to firestore
+                try {
+                    // Create an object to hold the user scores for each unique category
+                    const userScores = {};
+                    uniqueCategories.forEach((category) => {
+                        userScores[category] = 0; // Initialize the score as 0
+                    });
+
+                    // Add the userScore document with the unique categories and their scores
+                    const userScoreRef = await addDoc(collection(db, "userScores"), {
+                        userEmail: user.email,
+                        scores: userScores
+                    });
+                } catch (e) {
+                    console.error("Error adding user score document: ", e);
+                }
+
+                // Navigate to profile tab 
                 navigation.navigate('Profile')
             })
             .catch((error) => {
@@ -78,7 +102,7 @@ const SignUpScreen = ({ navigation }) => {
                 <View>
                     <Text>Email</Text>
                     <TextInput
-                        className='bg-neutral p-1 rounded-sm'
+                        className='bg-neutral p-3 rounded-sm'
                         placeholder='Nhập email hợp lệ'
                         value={signUpForm.email}
                         onChangeText={(text) => onChange('email', text)}
@@ -87,7 +111,7 @@ const SignUpScreen = ({ navigation }) => {
                 <View>
                     <Text>Mật khẩu</Text>
                     <TextInput
-                        className='bg-neutral p-1 rounded-sm'
+                        className='bg-neutral p-3 rounded-sm'
                         placeholder='Nhập mật khẩu (ít nhất 8 ký tự)'
                         secureTextEntry={true}
                         value={signUpForm.password}
@@ -97,7 +121,7 @@ const SignUpScreen = ({ navigation }) => {
                 <View>
                     <Text>Xác nhận mật khẩu</Text>
                     <TextInput
-                        className='bg-neutral p-1 rounded-sm'
+                        className='bg-neutral p-3 rounded-sm'
                         placeholder='Nhập lại mật khẩu'
                         secureTextEntry={true}
                         value={signUpForm.confirmPassword}

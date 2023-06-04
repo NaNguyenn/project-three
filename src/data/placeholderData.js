@@ -1,4 +1,4 @@
-export default vocabulary = [
+const vocabulary = [
     {
         eng: "hello",
         vie: "xin chào",
@@ -30,5 +30,24 @@ export default vocabulary = [
         quiz: "Nói khi muốn nhờ ai đó việc gì",
         audio: "",
         level: "1"
+    }
+]
+
+const userScores = [
+    {
+        "userEmail": "1@example.com",
+        "scores": {
+            "Category1": 0,
+            "Category2": 0,
+            "Category3": 0
+        }
+    },
+    {
+        "userEmail": "2@example.com",
+        "scores": {
+            "Category1": 0,
+            "Category2": 0,
+            "Category3": 0
+        }
     }
 ]
