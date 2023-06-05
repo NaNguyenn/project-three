@@ -183,7 +183,7 @@ const LessonScreen = ({ route, navigation }) => {
                     className={`flex-1 py-6 shadow ${(selectedOptionIndex === null || isAnswerChecked) ? 'bg-secondaryLight' : 'bg-secondary'}`}
                 >
                     <Text className="text-neutral text-center font-bold text-2xl">
-                        Check
+                        Kiểm tra
                     </Text>
                 </TouchableOpacity>
                 {(isQuizMode && currentWordIndex === vocabulary.length - 1) ?
@@ -192,7 +192,7 @@ const LessonScreen = ({ route, navigation }) => {
                         className={`flex-1 py-6 shadow ${isAnswerChecked ? 'bg-primary' : 'bg-primaryLight'}`}
                     >
                         <Text className="text-neutral text-center font-bold text-2xl">
-                            Finish
+                            Hoàn thành
                         </Text>
                     </TouchableOpacity>
                     :
@@ -201,7 +201,7 @@ const LessonScreen = ({ route, navigation }) => {
                         className={`flex-1 py-6 shadow ${isAnswerChecked ? 'bg-primary' : 'bg-primaryLight'}`}
                     >
                         <Text className="text-neutral text-center font-bold text-2xl">
-                            Next
+                            Tiếp
                         </Text>
                     </TouchableOpacity>
                 }

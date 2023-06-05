@@ -58,7 +58,8 @@ const ProfileScreen = ({ navigation }) => {
                         </TouchableOpacity>
                     </NameChangerModal>
 
-                    <View className='flex-row items-center gap-x-2'>
+                    {/* Profile content  */}
+                    <View className='flex-row items-center px-2 gap-x-2'>
                         <Text className='text-lg'>
                             Xin chào, {user.displayName ? user.displayName : user.email}
                         </Text>
