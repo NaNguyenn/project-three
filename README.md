@@ -17,3 +17,5 @@ Project uses [React Native](https://reactnative.dev/docs/getting-started) and
 [NativeWind](https://www.nativewind.dev/quick-starts/expo) for styling.
 
 [React Navigation](https://reactnavigation.org/docs/getting-started/) for navigating.
+
+[Firebase](https://firebase.google.com/docs) for authentication and database.
