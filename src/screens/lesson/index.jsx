@@ -131,14 +131,20 @@ const LessonScreen = ({ route, navigation }) => {
     return (
         <SafeAreaView className="h-full flex">
             {/* Question & score container*/}
-            <View className='flex-row items-center mb-4'>
+            <View className='flex-row items-center justify-between mb-4'>
                 {/* Question */}
-                <Pressable className='flex-row flex-1 items-center gap-x-2' onPress={() => handlePlayAudio(currentWord.audio)}>
-                    <Ionicons name="md-volume-medium" size={30} color="black" />
-                    <Text className='text-xl'>
-                        {isQuizMode ? currentWord.quiz : currentWord.eng}
+                {!isQuizMode ? (
+                    <Pressable className='flex-row flex-1 items-center gap-x-2' onPress={() => handlePlayAudio(currentWord.audio)}>
+                        <Ionicons name="md-volume-medium" size={30} color="black" />
+                        <Text className='text-xl'>
+                            {currentWord.eng}
+                        </Text>
+                    </Pressable>
+                ) : (
+                    <Text className='text-xl mx-6'>
+                        {currentWord.quiz}
                     </Text>
-                </Pressable>
+                )}
                 {/* Score */}
                 <Text className='mx-6 text-xl'>
                     {score}/{vocabulary.length * 2}
