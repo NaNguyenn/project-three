@@ -103,8 +103,7 @@ const LessonScreen = ({ route, navigation }) => {
                     query(userScoresRef, where('userEmail', '==', user.email))
                 )
                 const docRef = querySnapshot.docs[0].ref;
-                const docData = querySnapshot.docs[0].data();
-                console.log(docData)
+                const docData = querySnapshot.docs[0].data()
                 const scores = docData.scores;
                 scores[category] = score
                 await updateDoc(docRef, { scores })

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import { db } from '../config/firebaseConfig';
 import useAuth from './useAuth'
 
@@ -12,20 +12,29 @@ export const UserScoreProvider = ({ children }) => {
     const [userScore, setUserScore] = useState([]);
 
     useEffect(() => {
+        let unsubscribe
+
         const fetchData = async () => {
             try {
                 if (user) {
-                    const q = query(collection(db, "userScores"), where("userEmail", "==", user.email));
-                    const querySnapshot = await getDocs(q);
-                    const data = querySnapshot.docs.map((doc) => doc.data().scores);
-                    setUserScore(data);
+                    const q = query(collection(db, 'userScores'), where('userEmail', '==', user.email));
+                    unsubscribe = onSnapshot(q, (snapshot) => {
+                        const data = snapshot.docs.map((doc) => doc.data().scores);
+                        setUserScore(data);
+                    });
                 }
             } catch (error) {
-                console.log("Error fetching data:", error);
+                console.log('Error fetching data:', error);
             }
         };
 
         fetchData();
+
+        return () => {
+            if (unsubscribe) {
+                unsubscribe();
+            }
+        };
     }, [user]);
 
     return (
