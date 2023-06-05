@@ -8,6 +8,7 @@ const HomeScreen = ({ navigation }) => {
         <SafeAreaView className="flex-col h-full">
             {/* Main section */}
             <View className="bg-neutral flex-1 flex-col gap-y-6 p-6 justify-center">
+                {/* Vocabulary section button */}
                 <TouchableOpacity
                     className='bg-primary py-6 rounded-lg shadow'
                     onPress={() => navigation.navigate('Level')}
@@ -16,9 +17,11 @@ const HomeScreen = ({ navigation }) => {
                         Từ vựng
                     </Text>
                 </TouchableOpacity>
+
+                {/* Grammar section button */}
                 <TouchableOpacity
                     className='bg-secondary py-6 rounded-lg shadow'
-                    onPress={() => navigation.navigate('Level')}
+                    onPress={() => navigation.navigate('Developing')}
                 >
                     <Text className="text-neutral text-center font-bold text-2xl">
                         Ngữ pháp

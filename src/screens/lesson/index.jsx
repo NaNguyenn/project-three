@@ -6,7 +6,7 @@ import { Audio } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
 import useAuth from '../../hooks/useAuth';
 import { db } from '../../config/firebaseConfig';
-import { collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import { collection, getDocs, query, updateDoc, where } from 'firebase/firestore';
 
 const LessonScreen = ({ route, navigation }) => {
     const { user } = useAuth()
@@ -20,15 +20,20 @@ const LessonScreen = ({ route, navigation }) => {
     const [sound, setSound] = React.useState()
     const [score, setScore] = useState(0)
 
+    // Function to generate 4 options randomly 
     const generateRandomOptions = () => {
+        // Set a random index for the correct option 
         const correctIndex = Math.floor(Math.random() * 4)
         const options = []
+        // Get the question index so the random options not count the correct options 
         const usedIndexes = [currentWordIndex]
 
         for (let i = 0; i < 4; i++) {
             if (i === correctIndex) {
+                // Add correct option 
                 options.push(isQuizMode ? vocabulary[currentWordIndex].eng : vocabulary[currentWordIndex].vie)
             } else {
+                // Add random option
                 let randomIndex;
                 do {
                     randomIndex = Math.floor(Math.random() * vocabulary.length)
@@ -41,16 +46,19 @@ const LessonScreen = ({ route, navigation }) => {
         return options
     };
 
+    // Generate new options when question change 
     useEffect(() => {
         setOptions(generateRandomOptions())
     }, [currentWordIndex, isQuizMode])
 
+    // Function to play audio using expo-av
     const handlePlayAudio = async (audioSrc) => {
         const { sound } = await Audio.Sound.createAsync({ uri: audioSrc });
         setSound(sound);
         await sound.playAsync();
     }
 
+    // Cleanup sound when component unmount or sound state change
     useEffect(() => {
         return sound
             ? () => {
@@ -59,6 +67,7 @@ const LessonScreen = ({ route, navigation }) => {
             : undefined;
     }, [sound]);
 
+    // Handle user choosing option 
     const handleOptionPress = (index) => {
         if (!isAnswerChecked) {
             if (selectedOptionIndex === index) {
@@ -69,6 +78,7 @@ const LessonScreen = ({ route, navigation }) => {
         }
     };
 
+    // Check correct answer
     const handleCheckAnswer = () => {
         setIsAnswerChecked(true);
         if (
@@ -79,6 +89,7 @@ const LessonScreen = ({ route, navigation }) => {
         }
     };
 
+    // Switch to next question
     const handleNextQuestion = () => {
         if (isAnswerChecked) {
             const nextIndex = currentWordIndex + 1
@@ -92,9 +103,11 @@ const LessonScreen = ({ route, navigation }) => {
                 setCurrentWordIndex(nextIndex);
             }
         }
-    };
+    }
+
     const currentWord = vocabulary[currentWordIndex]
 
+    // Update user score and navigate when Finish 
     const handleFinishPress = async () => {
         if (user) {
             try {

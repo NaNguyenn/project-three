@@ -1,15 +1,16 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import useAuth from '../../hooks/useAuth'
-import { signOut } from 'firebase/auth'
+import { signOut, updateProfile } from 'firebase/auth'
 import { auth } from '../../config/firebaseConfig'
 import NameChangerModal from './components/NameChangerModal'
 
 const ProfileScreen = ({ navigation }) => {
     const { user } = useAuth()
     const [isModalVisible, setIsModalVisible] = useState(false)
+    const [newDisplayName, setNewDisplayName] = useState('')
 
     const handleNameChangerPress = () => {
         setIsModalVisible(true)
@@ -19,12 +20,44 @@ const ProfileScreen = ({ navigation }) => {
         setIsModalVisible(false)
     }
 
+    const handleInputChange = (text) => {
+        setNewDisplayName(text);
+    }
+
+    const handleNameChange = async () => {
+        try {
+            await updateProfile(auth.currentUser, { displayName: newDisplayName });
+            setIsModalVisible(false);
+        } catch (error) {
+            console.log('Error updating display name:', error);
+        }
+    }
+
     return (
         <SafeAreaView className="flex h-full">
             {user ? (
                 // Screen when user logged in 
                 <View className="bg-neutral flex-1 gap-y-6">
-                    <NameChangerModal isVisible={isModalVisible} onClose={onModalClose}></NameChangerModal>
+                    {/* Name changer Modal  */}
+                    <NameChangerModal isVisible={isModalVisible} onClose={onModalClose}>
+                        {/* Name changer input  */}
+                        <TextInput
+                            className='bg-neutral p-3 rounded-lg my-3'
+                            placeholder='Nhập tên hiển thị mới'
+                            value={newDisplayName}
+                            onChangeText={handleInputChange}
+                        />
+                        {/* Modal button  */}
+                        <TouchableOpacity
+                            className='bg-primary p-2 rounded-full shadow'
+                            onPress={handleNameChange}
+                        >
+                            <Text className="text-neutral text-center">
+                                Đổi tên
+                            </Text>
+                        </TouchableOpacity>
+                    </NameChangerModal>
+
                     <View className='flex-row items-center gap-x-2'>
                         <Text className='text-lg'>
                             Xin chào, {user.displayName ? user.displayName : user.email}
