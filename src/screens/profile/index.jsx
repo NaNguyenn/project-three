@@ -6,6 +6,7 @@ import useAuth from "../../hooks/useAuth";
 import { signOut, updateProfile } from "firebase/auth";
 import { auth } from "../../config/firebaseConfig";
 import NameChangerModal from "./components/NameChangerModal";
+import { adminEmails } from "../../data/adminEmails";
 
 const ProfileScreen = ({ navigation }) => {
   const { user } = useAuth();
@@ -31,6 +32,14 @@ const ProfileScreen = ({ navigation }) => {
     } catch (error) {
       console.log("Error updating display name:", error);
     }
+  };
+
+  //Check if user is admin
+  const isAdmin = () => {
+    if (user && user.email) {
+      return adminEmails.includes(user.email);
+    }
+    return false;
   };
 
   return (
@@ -67,6 +76,15 @@ const ProfileScreen = ({ navigation }) => {
             >
               <Text className="text-neutral text-center">Đổi tên</Text>
             </TouchableOpacity>
+            {/* Display button if user is an admin */}
+            {isAdmin() && (
+              <TouchableOpacity
+                onPress={() => console.log("Admin button clicked")}
+                className="bg-primary p-2 rounded-full shadow"
+              >
+                <Text className="text-neutral text-center">Admin</Text>
+              </TouchableOpacity>
+            )}
           </View>
           <TouchableOpacity
             onPress={() => signOut(auth)}
