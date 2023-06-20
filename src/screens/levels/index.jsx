@@ -39,6 +39,16 @@ const LevelScreen = ({ navigation }) => {
             Nâng cao
           </Text>
         </TouchableOpacity>
+
+        {/* Level IELTS */}
+        <TouchableOpacity
+          className="bg-red-500 py-6 rounded-lg shadow"
+          onPress={() => navigation.navigate("Categories", { level: 4 })}
+        >
+          <Text className="text-neutral text-center font-bold text-2xl">
+            IELTS
+          </Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
