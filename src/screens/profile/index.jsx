@@ -79,7 +79,7 @@ const ProfileScreen = ({ navigation }) => {
             {/* Display button if user is an admin */}
             {isAdmin() && (
               <TouchableOpacity
-                onPress={() => console.log("Admin button clicked")}
+                onPress={() => navigation.navigate("Admin")}
                 className="bg-primary p-2 rounded-full shadow"
               >
                 <Text className="text-neutral text-center">Admin</Text>
