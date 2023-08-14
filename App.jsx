@@ -4,6 +4,11 @@ import { AuthProvider } from "./src/hooks/useAuth.js";
 import TabNavigator from "./src/navigators/TabNavigator.jsx";
 import { VocabularyProvider } from "./src/hooks/useVocabulary.js";
 import { UserScoreProvider } from "./src/hooks/useUserScore.js";
+import { NativeWindStyleSheet } from "nativewind";
+
+NativeWindStyleSheet.setOutput({
+  default: "native",
+});
 
 export default function App() {
   return (
